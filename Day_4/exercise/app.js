@@ -12,7 +12,7 @@ getData(function (data) {
 });
 
 const p = new Promise((resolve, reject) => {
-  if (1 + 1 === 3) {
+  if (1 + 1 === 2) {
     resolve();
   } else {
     reject(new Error("Something went wrong"));

@@ -1,7 +1,7 @@
 const usernameInputElement = document.getElementById("username");
 console.log(usernameInputElement);
 
-usernameInputElement.addEventListener("keyup", async (e) => {
+usernameInputElement.addEventListener("keydown", async (e) => {
   e.preventDefault();
   console.log("Key up!", e);
 

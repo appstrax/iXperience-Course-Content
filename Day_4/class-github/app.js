@@ -1,7 +1,7 @@
 const usernameInputElement = document.getElementById("username");
 
 usernameInputElement.addEventListener("keyup", (e) => {
-  // console.log('Key up!', e);
+  console.log('Key up!', e);
 
   const username = e.target.value;
   // console.log(username);
@@ -15,11 +15,11 @@ usernameInputElement.addEventListener("keyup", (e) => {
         console.log("Yeeaaaahh Boooiii!!!", userData);
         console.log("User Location: ", userData.location);
         console.log("Number of followers: ", userData.followers);
-        // document.getElementById('profile').innerText = userData.location;
+        document.getElementById('profile').innerText = userData.location;
         const profileElement = document.getElementById("profile");
         profileElement.innerHTML = `
-      <div class="Name">${userData.location}</div>
-      <div>Number of followers: ${userData.followers}</div>
+      <div class="badge badge-primary">${userData.location}</div>
+      <div class="thisOne">Number of followers: ${userData.followers}</div>
       `;
       });
     })
