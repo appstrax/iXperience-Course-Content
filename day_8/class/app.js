@@ -3,12 +3,14 @@ class Task {
     this.id = id;
     this.title = title;
     this.sortKey = sortKey; // If you want to sort... this doesn't work yet
+    this.priority = {};
   }
 }
 
 class TaskListPage {
   constructor() {
     this.tasks = [];
+    this.priorities = [];
 
     // const massUpdates = {
     //   '/tasks/some-id-1': {title: "Task 1"},
@@ -22,7 +24,21 @@ class TaskListPage {
 
     // firebase.database().ref().update(massUpdates);
 
-    firebase
+    firebase.database().ref("priorities").once("value", (prioritiesSnapshot) => {
+      const allPriorities = prioritiesSnapshot.val();
+      Object.keys(allPriorities).forEach(priorityId => {
+        const priorityData = allPriorities[priorityId];
+        const priority = {
+          id: priorityId,
+          name: priorityData.name,
+          color: priorityData.color
+        };
+        this.priorities.push(priority);
+      });
+
+      console.log(this.priorities);
+
+      firebase
       .database()
       .ref("tasks")
       .once("value", (snapshot) => {
@@ -30,13 +46,19 @@ class TaskListPage {
         Object.keys(allTasks).forEach((taskId) => {
           const taskData = allTasks[taskId];
           const task = new Task(taskId, taskData.title);
+
+          if (taskData.priorityId) {
+            const priority = this.priorities.find(priority => priority.id == taskData.priorityId);
+            task.priority = priority;
+          }
+
           this.tasks.push(task);
 
           const taskListElement = document.getElementById("taskList");
           const row = document.createElement("tr");
           row.setAttribute("data-task-id", task.id);
           row.innerHTML = `
-            <td>${task.title}</td>
+            <td>${task.title} <span class="badge badge-success">${task.priority.name}</span></td>
             <td>
               <button data-action="edit" data-task-id="${task.id}" class="btn btn-primary">Edit</button>
               <button data-action="delete" data-task-id="${task.id}" class="btn btn-danger">Delete</button>
@@ -45,6 +67,9 @@ class TaskListPage {
           taskListElement.appendChild(row);
         });
       });
+    })
+
+
   }
 
   addTask(title) {
