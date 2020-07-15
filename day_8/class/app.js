@@ -12,6 +12,8 @@ class TaskListPage {
     this.tasks = [];
     this.priorities = [];
 
+    // Hey guys :D 
+
     // const massUpdates = {
     //   '/tasks/some-id-1': {title: "Task 1"},
     //   '/tasks/some-id-2': {title: "Task 2"},
