@@ -2,7 +2,7 @@ class Task {
   constructor(id, title, sortKey = 0) {
     this.id = id;
     this.title = title;
-    this.sortKey = sortKey; // If you want to sort...
+    this.sortKey = sortKey; // If you want to sort... this doesn't work yet
   }
 }
 
